@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct ToDoItem {
-    let id: String
-    let text: String
-    let importance: ItemImportance
-    let deadline: Date?
-    let isDone: Bool
-    let createdAt: Date
-    let changedAt: Date?
-    let color: String?
-    let category: String?
-    let categoryColor: String?
+public struct ToDoItem {
+    public let id: String
+    public let text: String
+    public let importance: ItemImportance
+    public let deadline: Date?
+    public let isDone: Bool
+    public let createdAt: Date
+    public let changedAt: Date?
+    public let color: String?
+    public let category: String?
+    public let categoryColor: String?
 
-    init(id: String? = UUID().uuidString,
+    public init(id: String? = UUID().uuidString,
          text: String,
          importance: ItemImportance,
          deadline: Date? = nil,

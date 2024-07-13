@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ItemImportance: String {
+public enum ItemImportance: String {
     case low
     case basic
     case important

@@ -9,18 +9,18 @@ let package = Package(
         .iOS(.v16)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "FileCache",
             targets: ["FileCache"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", exact: "3.8.5"),
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "FileCache"),
-        .testTarget(
-            name: "FileCacheTests",
-            dependencies: ["FileCache"]),
+            name: "FileCache",
+            dependencies: [
+                .product(name: "CocoaLumberjack", package: "CocoaLumberjack")]
+        )
     ]
 )
