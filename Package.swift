@@ -14,13 +14,12 @@ let package = Package(
             targets: ["FileCache"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", exact: "3.8.5"),
     ],
     targets: [
         .target(
             name: "FileCache",
             dependencies: [
-                .product(name: "CocoaLumberjack", package: "CocoaLumberjack")]
+            ]
         )
     ]
 )

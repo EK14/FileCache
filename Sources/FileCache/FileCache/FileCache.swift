@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
-import CocoaLumberjackSwift
 
 public class FileCache {
     public private(set) var todoItems: [ToDoItem] = []
@@ -25,7 +23,7 @@ public class FileCache {
         do {
             try manager.createDirectory(at: appFolderPath, withIntermediateDirectories: true)
         } catch {
-            DDLogInfo(error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
 
@@ -46,7 +44,7 @@ public class FileCache {
             let jsonData = try JSONSerialization.data(withJSONObject: todoItemsData)
             manager.createFile(atPath: fileUrl.path, contents: jsonData)
         } catch {
-            DDLogInfo(error.localizedDescription)
+            print(error.localizedDescription)
         }
         saveAction?()
     }
