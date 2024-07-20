@@ -6,42 +6,48 @@
 //
 
 import Foundation
+import UIKit
 
 extension ToDoItem {
     // Сomputed property for generating json
-    var json: Any {
+    public var json: Any {
         var jsonDict: [String: Any] = [
             "text": text
         ]
 
         jsonDict["id"] = id
 
-        // Don't save importance in json if it's "basic"
-        if importance != .basic {
-            jsonDict["importance"] = importance.rawValue
-        }
+        jsonDict["importance"] = importance.rawValue
 
         // Save deadline only if it is specified
         if let deadline = deadline {
-            jsonDict["deadline"] = deadline.timeIntervalSince1970
+            jsonDict["deadline"] = Int(deadline.timeIntervalSince1970)
+        } else {
+            jsonDict["deadline"] = nil
         }
 
-        jsonDict["created_at"] = createdAt.timeIntervalSince1970
+        jsonDict["created_at"] = Int(createdAt.timeIntervalSince1970)
+        
+        jsonDict["changed_at"] = Int(changedAt.timeIntervalSince1970)
 
-        jsonDict["isDone"] = isDone
+        jsonDict["done"] = isDone
 
         jsonDict["color"] = color
+        
+        jsonDict["last_updated_by"] = UIDevice.current.identifierForVendor!.uuidString
+        
+        jsonDict["files"] = nil
 
-        jsonDict["category"] = category
-
-        jsonDict["categoryColor"] = categoryColor
-
+//        jsonDict["category"] = category
+//
+//        jsonDict["categoryColor"] = categoryColor
+        print(jsonDict)
         return jsonDict
     }
 
     // - Parameter json: A JSON object in the form of a URL or a dictionary
     // - Returns: A ToDoItem object if the JSON is valid, or nil otherwise
-    static func parse(json: Any) -> ToDoItem? {
+    public static func parse(json: Any) -> ToDoItem? {
         // Check if the input is a URL or a dictionary
         if let json = json as? URL {
             do {
@@ -62,7 +68,7 @@ extension ToDoItem {
 
     // - Parameter data: A Data object containing the JSON data
     // - Returns: A ToDoItem instance if the JSON data is valid and contains all required fields, or nil otherwise
-    private static func createItem(data: Data) -> ToDoItem? {
+    public static func createItem(data: Data) -> ToDoItem? {
         guard let jsonDict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
             return nil
         }
@@ -77,7 +83,7 @@ extension ToDoItem {
 
         let deadline = jsonDict["deadline"] as? TimeInterval
 
-        let done = jsonDict["isDone"] as? Bool ?? false
+        let done = jsonDict["done"] as? Bool ?? false
 
         let changedAt = jsonDict["changed_at"] as? TimeInterval
 
@@ -93,7 +99,7 @@ extension ToDoItem {
                         deadline: deadline.map { Date(timeIntervalSince1970: $0)},
                         isDone: done,
                         createdAt: Date(timeIntervalSince1970: createdAt),
-                        changedAt: changedAt.map { Date(timeIntervalSince1970: $0) },
+                        changedAt: changedAt.map { Date(timeIntervalSince1970: $0) }!,
                         color: color,
                         category: category,
                         categoryColor: categoryColor)

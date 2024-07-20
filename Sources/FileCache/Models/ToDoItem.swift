@@ -14,7 +14,7 @@ public struct ToDoItem {
     public let deadline: Date?
     public let isDone: Bool
     public let createdAt: Date
-    public let changedAt: Date?
+    public let changedAt: Date
     public let color: String?
     public let category: String?
     public let categoryColor: String?
@@ -25,7 +25,7 @@ public struct ToDoItem {
          deadline: Date? = nil,
          isDone: Bool,
          createdAt: Date = Date.now,
-         changedAt: Date? = nil,
+         changedAt: Date = Date.now,
          color: String? = nil,
          category: String? = nil,
          categoryColor: String? = nil) {
